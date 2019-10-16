@@ -1,11 +1,18 @@
 // action types
 export const SET_AUTHED_USER = "SET_AUTHED_USER"
-// action creators
+export const LOG_OUT = 'LOG_OUT'
 
-export function setAuthedUser(userId){
+// action creators
+export function setAuthedUser(authedId){
     return {
         type: SET_AUTHED_USER,
-        userId
+        authedId
+    }
+}
+
+export function logOutUser(){
+    return {
+        type: LOG_OUT,
     }
 }
 

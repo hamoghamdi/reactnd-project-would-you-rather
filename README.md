@@ -1,3 +1,8 @@
+<!-- 
+Resources:
+1. https://codepen.io/raubaca/pen/VejpQP
+ -->
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
