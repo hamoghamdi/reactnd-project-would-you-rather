@@ -15,7 +15,7 @@ render() {
         <Tabs defaultActiveKey="unaswered" id="uncontrolled-tab-example">
           <Tab eventKey="unaswered" title="Unaswered">
             {/* loop through answered, .map, access questions, get the author and option one */}
-            {answered.map(answr => {
+            {unanswered.map(answr => {
               if (questions[answr] !== undefined) {
                 return (
                   <Container
@@ -53,7 +53,7 @@ render() {
           </Tab>
           <Tab eventKey="answered" title="Answered">
             {/* loop through unanswered, .map, access questions, get the author and option one */}
-            {unanswered.map(answr => {
+            {answered.map(answr => {
               if (questions[answr] !== undefined) {
                 return (
                   <Container

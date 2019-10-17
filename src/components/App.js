@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Dashboard from "./Dashboard";
 import NewQuestion from "./NewQuestion";
+import QuestionPage from './QuestionPage'
 
 class App extends Component {
   state = {
@@ -65,8 +66,11 @@ class App extends Component {
             </Row>
           </Container>
         ) : (
-          <Dashboard />
-          // <NewQuestion />
+          <div>
+            <NewQuestion />
+            <Dashboard />
+            <QuestionPage questionID="vthrdm985a262al8qx3do" />
+          </div>
         )}
       </div>
     );

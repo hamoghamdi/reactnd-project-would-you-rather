@@ -1,5 +1,4 @@
 // API calls
-import { saveAnswer, saveQuestion } from '../utils/api'
 
 // action types
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS" // MOVE TO SHARED or EXPORT TO SHARED
@@ -14,39 +13,19 @@ export function receiveQuestions(questions) {
         };
     }
 
-function addQuestion(question){
+export function addQuestion(question){
     return {
         type: ADD_QUESTION,
         question
     }
 }
 
-function addAnswer(answer){
-    return {
-        type: ADD_ANSWER,
-        answer
-    }
+// answerInfo = { authedUser, qid, answer }
+export function addAnswer({ authedUser, qid, answer }) {
+  return {
+    type: ADD_ANSWER,
+    authedUser, qid, answer 
+  };
 }
 
 // action handlers
-// question coming from react = {optionOneText, optionTwoText, author}
-export function handleAddQuestion(question){
-    return (dispatch)=>{
-        // const { authedUser } = getState()
-        return saveQuestion(question).then((q)=>{
-            dispatch(addQuestion(q))
-
-        })
-    }
-
-}
-
-// answer = { authedUser, qid, answer }
-export function handleAddAnswer(answer){
-    return (dispatch)=>{
-        return saveAnswer(answer).then((ansr)=>{
-            dispatch(addAnswer(ansr)).catch(err => console.warn("Error in handleAddAnswer: ", err))
-        })
-    }
-
-}

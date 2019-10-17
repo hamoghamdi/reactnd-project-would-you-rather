@@ -18,6 +18,7 @@ export function saveQuestion(info){
     return _saveQuestion(info)
 }
 
-export function saveAnswer(info){
-    return _saveQuestionAnswer(info)
-}
+export function saveAnswer({ authedUser, qid, answer }) {
+    console.log("api>>>>>>>>>>>", authedUser, qid, answer );
+        return _saveQuestionAnswer({ authedUser, qid, answer });
+    }

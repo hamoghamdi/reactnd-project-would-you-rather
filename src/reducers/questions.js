@@ -11,13 +11,21 @@ export default function questions(state={}, action){
         case ADD_QUESTION:
             return {
                 ...state,
-                ...state.concat[action.question]
+                [action.question.id]: action.question
             }
+            // answer = { authedUser, qid, answer }
         case ADD_ANSWER:
             return {
                 ...state,
-                // find the q it answers then add in the votes // still needs work on algorithm
-            }
+                // find the q it answers then add in the votes
+                [action.qid]: {
+                ...state[action.qid],
+                [action.answer]: {
+                    ...state[action.qid][action.answer],
+                    votes: state[action.qid][action.answer].votes.concat([action.authedUser])
+                    }
+                }
+            };
         default :
             return state
     }
