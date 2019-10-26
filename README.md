@@ -1,8 +1,23 @@
-<!-- 
-Resources:
-1. https://codepen.io/raubaca/pen/VejpQP
- -->
 
+ # ![Misk Academy & Udacity Logo](https://misk.org.sa/miskacademy/wp-content/uploads/sites/5/2019/06/logo-ua.png)
+
+
+# 'Would you rather?' Project
+Second project of the React Nanodegree Program by Misk Academy Partnership with Udacity.
+Boostrapped from a starter templete found in [Starter Code for 'Would you rather?' Project](https://github.com/udacity/reactnd-project-would-you-rather-starter)
+
+This project allows the user to login/logout with a username of the three, ask would you rather questions, answer questions, keep track of the answered/unswered questions, view results of the answered questions, and view users score in the leaderboard.
+
+This project was built using react, redux, react-redux, react-bootstrap
+
+## Installation instructions
+- install all project dependencies with `npm install` OR  `yarn install`
+- start the development server with `npm start` OR `yarn start`
+
+## Resources
+- https://codepen.io/raubaca/pen/VejpQP
+
+<!-- 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -70,4 +85,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 ### `yarn build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify -->

@@ -103,3 +103,6 @@ select {
   border-radius: 4px;
   padding: 2% auto 2%;
 }
+.option-pargh{
+  border: 2px solid #34495e;
+}

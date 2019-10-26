@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { Card, Container, Row, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { handleAddQuestion } from '../actions/shared'
+import { Redirect } from 'react-router-dom'
 
 class NewQuestion extends Component {
   state = {
     optionOneText: "",
-    optionTwoText: ""
+    optionTwoText: "",
+    toDashbord: false
   };
   handleChange = (e) => {
     switch(e.target.placeholder){
@@ -24,9 +26,10 @@ class NewQuestion extends Component {
     const author = this.props.authedUser
 
     this.props.dispatch(handleAddQuestion({ optionOneText, optionTwoText, author }));
+    this.setState({toDashbord: true})
   };
   render() {
-    let { optionOneText, optionTwoText } = this.state;
+    let { optionOneText, optionTwoText, toDashbord } = this.state;
     return (
       <Container className="sign-in-card">
         <Row className="justify-content-md-center">
@@ -61,6 +64,7 @@ class NewQuestion extends Component {
             </Card.Body>
           </Card>
         </Row>
+        {toDashbord && <Redirect to='/' />}
       </Container>
     );
   }

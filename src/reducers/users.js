@@ -19,16 +19,15 @@ export default function users(state={}, action){
             }
         case ADD_USER_ANSWER: // { [qid]: answer }
             return {
-                ...state,
-                [action.authedUser]: {
-                    ...state[action.authedUser],
-                    answeres: {
-                        ...state[action.authedUser].answeres,
-                        [action.qid]: action.answer
-                    }
-
+              ...state,
+              [action.authedUser]: {
+                ...state[action.authedUser],
+                answers: {
+                  ...state[action.authedUser].answers,
+                  [action.qid]: action.answer
                 }
-            }
+              }
+            };
         default : 
             return state
     }

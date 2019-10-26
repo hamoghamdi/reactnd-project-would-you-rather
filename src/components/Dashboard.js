@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Container, Col, Row, Image, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 class Dashboard extends Component {
 render() {
-    console.log('QUESTIONS ' , this.props.questions)
-    console.log("USERS ", this.props.users);
-    console.log("AUTHED USER ", this.props.authedUser);
 
     const { questions, users, answered, unanswered } = this.props
+    // answered.sort((a, b) => questions[b].timestamp - questions[a].timestamp); 
 
     return (
       <div>
@@ -37,14 +36,15 @@ render() {
                       </Col>
                     </Row>
                     <Row>
-                      <Button
-                        className="sign-in-btn"
-                        variant="outline-dark"
-                        size="lg"
-                        block
-                      >
-                        View Poll
-                      </Button>
+                      
+                        <Button
+                          className="sign-in-btn"
+                          variant="outline-dark"
+                          size="lg"
+                          block
+                        >
+                          <Link to={`/questions/${questions[answr].id}`}>View Poll</Link>
+                        </Button>
                     </Row>
                   </Container>
                 );
@@ -81,7 +81,9 @@ render() {
                         size="lg"
                         block
                       >
-                        View Poll
+                        <Link to={`/questions/${questions[answr].id}`}>
+                          View Poll
+                        </Link>
                       </Button>
                     </Row>
                   </Container>
@@ -95,16 +97,27 @@ render() {
 }
 }
 function mapStateToProps({ authedUser, users, questions }) {
-  let answered = [];
-  if (users[authedUser] !== undefined) {
-    answered = Object.keys(users[authedUser].answers);
+  let unsortedAnswered = [];
+  console.log("authedUser", authedUser);
+  console.log('questions', questions)
+ 
+  if ( questions !== null && users[authedUser] !== undefined) {
+    unsortedAnswered = Object.keys(users[authedUser].answers);
   }
-  console.log("answers !!!!!!!!!!!!!", answered);
-  let questionsIds = Object.keys(questions) // filter out what's already in answered
-  let unanswered = questionsIds.filter(qid => !answered.includes(qid))
 
-  console.log("questions >>>>>>>>>>>>>>>", questionsIds);
-  console.log("un answered filtered <<<<<<<<<<<<<<<", unanswered);
+  let questionsIds = Object.keys(questions).sort(
+    (a, b) => questions[b].timestamp - questions[a].timestamp
+  ); 
+  
+  let answered = questionsIds.filter(qid => unsortedAnswered.includes(qid));
+  console.log("after filter & sort ", answered);
+  console.log("after filter & sort unsorted", unsortedAnswered);
+
+
+  // filter out what's already in answered
+  let unanswered = questionsIds.filter(qid => !unsortedAnswered.includes(qid));
+
+  console.log("un answered ordered <<<<<<<<<<<<<<<", unanswered);
 
   return {
     users,
@@ -114,3 +127,7 @@ function mapStateToProps({ authedUser, users, questions }) {
   };
 }
 export default connect(mapStateToProps)(Dashboard);
+
+// .map(ansrId =>{
+//         questions.filter(qusId => qusId === ansrId);
+//     }) 

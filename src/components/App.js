@@ -1,77 +1,72 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import '../App.css';
-import { Card, Button, Container, Row } from 'react-bootstrap'
+import { Nav, Navbar } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { handleInitialData } from '../actions/shared'
 import Dashboard from "./Dashboard";
 import NewQuestion from "./NewQuestion";
 import QuestionPage from './QuestionPage'
-
+import Login from './Login'
+import Leaderboard from './Leaderboard'
+import { logOutUser } from '../actions/authedUser'
 class App extends Component {
-  state = {
-    selectedUser: ""
-  };
-  handleChange = event => {
-    console.log("event ", event.target.value);
-    const selectedUser = event.target.value;
-    this.setState(() => {
-      return { selectedUser };
-    });
-  };
-  handleSignin = () => {
-    const authedId = this.state.selectedUser 
-    if(authedId !== '' || authedId !== 'unselected')
-      this.props.dispatch(handleInitialData(authedId));
-    
-  };
+logOut = () => {
+  if(this.props.authedUser !== null)
+    this.props.dispatch(logOutUser());
+}
+
   render() {
-    console.log('authed user ', this.props.authedUser)
     return (
       <div>
-        {this.props.authedUser === null ? (
-          <Container className="sign-in-card">
-            <Row className="justify-content-md-center">
-              <Card id="sign-in-card">
-                <Card.Header as="h5">
-                  Welcome to Would You Rather App!
-                </Card.Header>
-                <Card.Body>
-                  <Card.Title>Please sign in to continue</Card.Title>
-                  <Card.Text></Card.Text>
-                  <Card.Img src="../react-redux.svg.med.png" />
-                  <div className="select">
-                    <select
-                      name="slct"
-                      id="slct"
-                      onChange={e => this.handleChange(e)}
-                      defaultValue={this.selectedUser}
-                    >
-                      <option value="unselected">Choose a username</option>
-                      <option value="sarahedo">sarahedo</option>
-                      <option value="tylermcginnis">tylermcginnis</option>
-                      <option value="johndoe">johndoe</option>
-                    </select>
-                  </div>
-                  <Button
-                    onClick={this.handleSignin}
-                    className="sign-in-btn"
-                    variant="outline-dark"
-                    size="lg"
-                    block
-                  >
-                    Sign in
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Row>
-          </Container>
-        ) : (
-          <div>
-            <NewQuestion />
-            <Dashboard />
-            <QuestionPage questionID="vthrdm985a262al8qx3do" />
-          </div>
-        )}
+        <Router>
+          <Navbar bg="dark" variant="dark">
+            <Navbar.Brand href="#home">Would You Rather?</Navbar.Brand>
+            <Nav className="mr-auto">
+              <Link to="/">
+                <Nav.Link href="#home">Home</Nav.Link>
+              </Link>
+              <Link to="/add">
+                <Nav.Link href="#new-question">New Question</Nav.Link>
+              </Link>
+              <Link to="/leaderboard">
+                <Nav.Link href="#leaderboard">Leaderboard</Nav.Link>
+              </Link>
+              <Nav.Link href="" onClick={this.logOut}>
+                Log out
+              </Nav.Link>
+              <Navbar.Toggle />
+              <Navbar.Collapse className="justify-content-end">
+                <Navbar.Text>Signed in as: {this.props.authedUser}</Navbar.Text>
+              </Navbar.Collapse>
+            </Nav>
+          </Navbar>
+
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => {
+                if (this.props.authedUser === null) return <Login />;
+                else return <Dashboard />;
+              }}
+            />
+            <Route
+              path="/add"
+              render={() => {
+                if (this.props.authedUser === null) return <Redirect to="/" />;
+                else return <NewQuestion />;
+              }}
+            />
+            <Route path="/questions/:question_id" component={QuestionPage} />
+            <Route
+              path="/leaderboard"
+              render={() => {
+                if (this.props.authedUser === null) return <Redirect to="/" />;
+                else return <Leaderboard />;
+              }}
+            />
+          </Switch>
+        </Router>
       </div>
     );
   }
@@ -83,4 +78,3 @@ function mapStateToProps( { authedUser } ){
   }
 }
 export default connect(mapStateToProps)(App);
-// connect mapstateToProps {authedUser
