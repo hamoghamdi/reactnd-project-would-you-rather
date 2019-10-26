@@ -188,7 +188,7 @@ class QuestionPage extends Component {
                           </p>
                         </Col>
                       </Row>
-                      <Row></Row>
+                      
                     </Container>
                   );
                 }
