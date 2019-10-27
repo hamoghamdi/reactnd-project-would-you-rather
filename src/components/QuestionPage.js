@@ -71,6 +71,7 @@ class QuestionPage extends Component {
                               }
                               className="avatar"
                               roundedCircle
+                              alt= ""
                             />
                           </Col>
 
@@ -116,7 +117,7 @@ class QuestionPage extends Component {
                       </form>
                     </Container>
                   );
-                }
+                } else return null 
               }) : (<Redirect to='/' />)}
 
             {users[authedUser] !== undefined ?
@@ -191,7 +192,7 @@ class QuestionPage extends Component {
                       
                     </Container>
                   );
-                }
+                } else return null
               }) : (<Redirect to='/' />)}
           </div>
         );

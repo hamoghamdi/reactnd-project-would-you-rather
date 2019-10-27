@@ -106,3 +106,9 @@ select {
 .option-pargh{
   border: 2px solid #34495e;
 }
+
+.navs-links{
+  padding: 15px;
+  display: inline-block;
+  line-height: 20px;
+}

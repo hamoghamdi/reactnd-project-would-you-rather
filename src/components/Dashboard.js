@@ -47,8 +47,10 @@ render() {
                         </Button>
                     </Row>
                   </Container>
-                );
+                )
+                
               }
+              else return null;
             })}
           </Tab>
           <Tab eventKey="answered" title="Answered">
@@ -89,6 +91,7 @@ render() {
                   </Container>
                 );
               }
+              else return null
             })}
           </Tab>
         </Tabs>

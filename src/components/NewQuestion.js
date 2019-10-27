@@ -17,6 +17,8 @@ class NewQuestion extends Component {
         break;
       case "option two":
         this.setState({ optionTwoText: e.target.value })
+        break;
+      default: return ""
     }
   }
   handleSubmit = (e) => {

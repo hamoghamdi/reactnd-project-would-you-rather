@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import '../App.css';
 import { Nav, Navbar } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -9,6 +9,9 @@ import QuestionPage from './QuestionPage'
 import Login from './Login'
 import Leaderboard from './Leaderboard'
 import { logOutUser } from '../actions/authedUser'
+import AuthRoute from './AuthRoute'
+
+
 class App extends Component {
 logOut = () => {
   if(this.props.authedUser !== null)
@@ -17,57 +20,48 @@ logOut = () => {
 
   render() {
     return (
-      <div>
+      
         <Router>
-          <Navbar bg="dark" variant="dark">
-            <Navbar.Brand href="#home">Would You Rather?</Navbar.Brand>
-            <Nav className="mr-auto">
-              <Link to="/">
-                <Nav.Link href="#home">Home</Nav.Link>
-              </Link>
-              <Link to="/add">
-                <Nav.Link href="#new-question">New Question</Nav.Link>
-              </Link>
-              <Link to="/leaderboard">
-                <Nav.Link href="#leaderboard">Leaderboard</Nav.Link>
-              </Link>
-              <Nav.Link href="" onClick={this.logOut}>
-                Log out
-              </Nav.Link>
-              <Navbar.Toggle />
-              <Navbar.Collapse className="justify-content-end">
-                <Navbar.Text>Signed in as: {this.props.authedUser}</Navbar.Text>
-              </Navbar.Collapse>
-            </Nav>
-          </Navbar>
+          <Fragment>
+            <Navbar bg="dark" variant="dark">
+              <Navbar.Brand href="#home">Would You Rather?</Navbar.Brand>
+              <Nav className="mr-auto">
+                <Link to="/">
+                  <Nav.Item className="navs-links">Home</Nav.Item>
+                </Link>
+                <Link to="/add">
+                  <Nav.Item className="navs-links">New Question</Nav.Item>
+                </Link>
+                <Link to="/leaderboard">
+                  <Nav.Item className="navs-links">Leaderboard</Nav.Item>
+                </Link>
+                <Nav.Link className="navs-links" href="" onClick={this.logOut}>
+                  Log out
+                </Nav.Link>
+                <Navbar.Toggle />
+                <Navbar.Collapse className="justify-content-end">
+                  <Navbar.Text className="navs-links">
+                    Signed in as: {this.props.authedUser}
+                  </Navbar.Text>
+                </Navbar.Collapse>
+              </Nav>
+            </Navbar>
 
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => {
-                if (this.props.authedUser === null) return <Login />;
-                else return <Dashboard />;
-              }}
-            />
-            <Route
-              path="/add"
-              render={() => {
-                if (this.props.authedUser === null) return <Redirect to="/" />;
-                else return <NewQuestion />;
-              }}
-            />
-            <Route path="/questions/:question_id" component={QuestionPage} />
-            <Route
-              path="/leaderboard"
-              render={() => {
-                if (this.props.authedUser === null) return <Redirect to="/" />;
-                else return <Leaderboard />;
-              }}
-            />
-          </Switch>
+            <Switch>
+              <Route exact path="/" render={() => {
+                if(this.props.authedUser === null)
+                  return <Login /> 
+                  else return <Dashboard />}} />
+              <AuthRoute path="/add" render={() => <NewQuestion />} />
+              <AuthRoute
+                path="/questions/:question_id"
+                component={QuestionPage}
+              />
+              <AuthRoute path="/leaderboard" render={() => <Leaderboard />} />
+            </Switch>
+          </Fragment>
         </Router>
-      </div>
+      
     );
   }
 }

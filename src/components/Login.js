@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Card, Button, Container, Row } from "react-bootstrap";
 import { handleInitialData } from "../actions/shared";
+import { Redirect, withRouter } from 'react-router-dom'
 
 
 class Login extends Component {
@@ -17,8 +18,27 @@ class Login extends Component {
     };
     handleSignin = () => {
     const authedId = this.state.selectedUser;
-    if (authedId !== "" || authedId !== "unselected")
+        console.log(
+          "this.props.location.state  login out ",
+          this.props.location.state.from.pathname
+        );
+        console.log(
+          "this.props.location.state  login out ",
+          this.props.location.state.from,
+          "type of ",
+          typeof this.props.location.state.from.pathname
+        );
+
+    if (authedId !== "" || authedId !== "unselected"){
         this.props.dispatch(handleInitialData(authedId));
+        console.log("this.props.location.state  login", this.props.location.state);
+        let from = { pathname: "/" };
+        if(this.props.location.state.from)
+            from = this.props.location.state.from;
+
+        console.log( ' this is from ', from)
+        return <Redirect to={from}  />
+    }
     };
     render() {
     return (
@@ -66,4 +86,4 @@ function mapStateToProps({ authedUser }) {
     };
 }
 
-export default connect(mapStateToProps)(Login);
+export default withRouter(connect(mapStateToProps)(Login))
