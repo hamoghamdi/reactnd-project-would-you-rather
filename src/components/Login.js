@@ -22,11 +22,13 @@ class Login extends Component {
         
 
     if (authedId !== "" || authedId !== "unselected"){
-        this.props.dispatch(handleInitialData(authedId));
-
-        this.setState(()=>{
-            return { backToReferrer: true }
+        this.props.dispatch(handleInitialData(authedId)).then(()=>{
+            this.setState(() => {
+              return { backToReferrer: true };
+            });
         })
+
+        
         // console.log("this.props.location.state  login", this.props.location.state);
         // const { from } = this.props.location.state || { pathname: "/" };
         
