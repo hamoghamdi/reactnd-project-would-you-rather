@@ -7,11 +7,14 @@ function AuthRoute({
   render: Render = null,
   ...rest
 }) {
+  console.log("loggedIn ,,,,", rest.loggedIn);
   return (
+    
     <Route
       {...rest}
       render={props => {
         if (rest.loggedIn) {
+          console.log('loggedIn in if,,' , rest.loggedIn)
           if (Render !== null) {
             return Render(props);
           } else if (Component !== null) {
@@ -21,6 +24,7 @@ function AuthRoute({
           }
         } else {
             console.log('AuthRoute location ', props.location)
+            
           return (
             <Redirect
               to={{
@@ -37,11 +41,12 @@ function AuthRoute({
 
 
 function mapStateToProps ({authedUser}) {
+  const loggedIn = authedUser 
 
     return {
-        loggedIn: authedUser !== null 
+        loggedIn 
     }
 
 }
 
-export default withRouter(connect(mapStateToProps)(AuthRoute))
+export default withRouter(connect(mapStateToProps)(AuthRoute));

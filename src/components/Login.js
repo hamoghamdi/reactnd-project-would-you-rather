@@ -22,23 +22,20 @@ class Login extends Component {
         
 
     if (authedId !== "" || authedId !== "unselected"){
-        this.props.dispatch(handleInitialData(authedId));
-
-        this.setState(()=>{
-            return { backToReferrer: true }
+        this.props.dispatch(handleInitialData(authedId)).then(()=>{
+            this.setState(() => {
+              return { backToReferrer: true };
+            });
         })
-        // console.log("this.props.location.state  login", this.props.location.state);
-        // const { from } = this.props.location.state || { pathname: "/" };
-        
-        // console.log( ' this is from ', from)
-        // return <Redirect to={from}  />
+
     }
     };
     render() {
 
         const { from } = this.props.location.state || { pathname: "/" };
-        if(this.state.backToReferrer)
-            return <Redirect to={from} />;
+        if(this.state.backToReferrer){
+            console.log('redirect in login ')
+            return <Redirect to={from} />;}
     return (
         <Container className="sign-in-card">
         <Row className="justify-content-md-center">
