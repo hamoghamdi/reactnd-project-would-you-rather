@@ -49,13 +49,27 @@ logOut = () => {
 
           <Switch>
             <Route exact path="/login" render={() => <Login />} />
-            <AuthRoute exact path="/" component={Dashboard} />
-            <AuthRoute path="/add" render={() => <NewQuestion />} />
+            <AuthRoute
+              exact
+              path="/"
+              
+              render={() => <Dashboard />}
+            />
+            <AuthRoute
+              path="/add"
+              
+              render={() => <NewQuestion />}
+            />
             <AuthRoute
               path="/questions/:question_id"
+              
               component={QuestionPage}
             />
-            <AuthRoute path="/leaderboard" render={() => <Leaderboard />} />
+            <AuthRoute
+              path="/leaderboard"
+              
+              render={() => <Leaderboard />}
+            />
           </Switch>
         </Fragment>
       </Router>
@@ -64,8 +78,9 @@ logOut = () => {
 }
 
 function mapStateToProps( { authedUser } ){
+  
   return {
-    authedUser
+    authedUser 
   }
 }
 export default connect(mapStateToProps)(App);

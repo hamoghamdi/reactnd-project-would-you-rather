@@ -39,8 +39,9 @@ class Login extends Component {
     render() {
 
         const { from } = this.props.location.state || { pathname: "/" };
-        if(this.state.backToReferrer)
-            return <Redirect to={from} />;
+        if(this.state.backToReferrer){
+            console.log('redirect in login ')
+            return <Redirect to={from} />;}
     return (
         <Container className="sign-in-card">
         <Row className="justify-content-md-center">
