@@ -47,10 +47,12 @@ class QuestionPage extends Component {
           questionsIds
         } = this.props;
         const { question_id } = this.props.match.params
+        if (questions[question_id] === undefined)
+          return <Redirect to="/questions/invalid" />;
+         
         const totalVotes =
           questions[question_id].optionOne.votes.length +
           questions[question_id].optionTwo.votes.length 
-          
 
         return (
           <div>

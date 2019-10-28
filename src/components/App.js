@@ -49,6 +49,7 @@ logOut = () => {
 
           <Switch>
             <Route exact path="/login" render={() => <Login />} />
+            <Route path='/questions/invalid' render={()=> <InvalidQuestionPage />} />
             <AuthRoute
               exact
               path="/"
