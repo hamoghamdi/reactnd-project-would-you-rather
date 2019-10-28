@@ -43,7 +43,8 @@ class QuestionPage extends Component {
           questions,
           answered,
           authedUser,
-          unanswered
+          unanswered,
+          questionsIds
         } = this.props;
         const { question_id } = this.props.match.params
         const totalVotes =
@@ -53,8 +54,15 @@ class QuestionPage extends Component {
 
         return (
           <div>
+            {/* if qid doesn't exist in questions return Invalid ....
+          else run the below code */}
+            {/* {questionsIds.filter(qid => questions[question_id] === undefined) && (
+              <Redirect to="/questions/invalid" />
+            )} */}
+
             <Link to="/">Back</Link>
-            {users[authedUser] !== undefined ?
+            {users[authedUser] !== undefined &&
+            questionsIds.filter(qid => questions[question_id] !== undefined) ? (
               unanswered.map(useranswr => {
                 if (useranswr === question_id) {
                   return (
@@ -71,7 +79,7 @@ class QuestionPage extends Component {
                               }
                               className="avatar"
                               roundedCircle
-                              alt= ""
+                              alt=""
                             />
                           </Col>
 
@@ -117,10 +125,14 @@ class QuestionPage extends Component {
                       </form>
                     </Container>
                   );
-                } else return null 
-              }) : (<Redirect to='/' />)}
+                } else return null;
+              })
+            ) : (
+              <Redirect to="/questions/invalid" />
+            )}
 
-            {users[authedUser] !== undefined ?
+            {users[authedUser] !== undefined &&
+            questionsIds.filter(qid => questions[question_id] !== undefined) ? (
               answered.map(useranswr => {
                 if (useranswr === question_id) {
                   return (
@@ -189,11 +201,13 @@ class QuestionPage extends Component {
                           </p>
                         </Col>
                       </Row>
-                      
                     </Container>
                   );
-                } else return null
-              }) : (<Redirect to='/' />)}
+                } else return null;
+              })
+            ) : (
+              <Redirect to="/questions/invalid" />
+            )}
           </div>
         );
     }
@@ -216,7 +230,8 @@ function mapStateToProps({users, authedUser, questions}, { question_id}){
         answered,
         unanswered,
         authedUser,
-        questions
+        questions,
+        questionsIds
     }
 }
 export default connect(mapStateToProps)(QuestionPage);

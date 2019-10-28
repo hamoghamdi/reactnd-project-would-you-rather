@@ -10,6 +10,7 @@ import Login from './Login'
 import Leaderboard from './Leaderboard'
 import { logOutUser } from '../actions/authedUser'
 import AuthRoute from './AuthRoute'
+import InvalidQuestionPage from "./InvalidQuestionPage";
 
 
 class App extends Component {
@@ -20,48 +21,44 @@ logOut = () => {
 
   render() {
     return (
-      
-        <Router>
-          <Fragment>
-            <Navbar bg="dark" variant="dark">
-              <Navbar.Brand href="#home">Would You Rather?</Navbar.Brand>
-              <Nav className="mr-auto">
-                <Link to="/">
-                  <Nav.Item className="navs-links">Home</Nav.Item>
-                </Link>
-                <Link to="/add">
-                  <Nav.Item className="navs-links">New Question</Nav.Item>
-                </Link>
-                <Link to="/leaderboard">
-                  <Nav.Item className="navs-links">Leaderboard</Nav.Item>
-                </Link>
-                <Nav.Link className="navs-links" href="" onClick={this.logOut}>
-                  Log out
-                </Nav.Link>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
-                  <Navbar.Text className="navs-links">
-                    Signed in as: {this.props.authedUser}
-                  </Navbar.Text>
-                </Navbar.Collapse>
-              </Nav>
-            </Navbar>
+      <Router>
+        <Fragment>
+          <Navbar bg="dark" variant="dark">
+            <Navbar.Brand href="#home">Would You Rather?</Navbar.Brand>
+            <Nav className="mr-auto">
+              <Link to="/">
+                <Nav.Item className="navs-links">Home</Nav.Item>
+              </Link>
+              <Link to="/add">
+                <Nav.Item className="navs-links">New Question</Nav.Item>
+              </Link>
+              <Link to="/leaderboard">
+                <Nav.Item className="navs-links">Leaderboard</Nav.Item>
+              </Link>
+              <Nav.Link className="navs-links" href="" onClick={this.logOut}>
+                Log out
+              </Nav.Link>
+              <Navbar.Toggle />
+              <Navbar.Collapse className="justify-content-end">
+                <Navbar.Text className="navs-links">
+                  Signed in as: {this.props.authedUser}
+                </Navbar.Text>
+              </Navbar.Collapse>
+            </Nav>
+          </Navbar>
 
-            <Switch>
-              <Route exact path="/" render={() => {
-                if(this.props.authedUser === null)
-                  return <Login /> 
-                  else return <Dashboard />}} />
-              <AuthRoute path="/add" render={() => <NewQuestion />} />
-              <AuthRoute
-                path="/questions/:question_id"
-                component={QuestionPage}
-              />
-              <AuthRoute path="/leaderboard" render={() => <Leaderboard />} />
-            </Switch>
-          </Fragment>
-        </Router>
-      
+          <Switch>
+            <Route exact path="/login" render={() => <Login />} />
+            <AuthRoute exact path="/" component={Dashboard} />
+            <AuthRoute path="/add" render={() => <NewQuestion />} />
+            <AuthRoute
+              path="/questions/:question_id"
+              component={QuestionPage}
+            />
+            <AuthRoute path="/leaderboard" render={() => <Leaderboard />} />
+          </Switch>
+        </Fragment>
+      </Router>
     );
   }
 }

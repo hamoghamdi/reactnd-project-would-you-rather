@@ -7,7 +7,8 @@ import { Redirect, withRouter } from 'react-router-dom'
 
 class Login extends Component {
     state = {
-    selectedUser: ""
+    selectedUser: "",
+    backToReferrer: false
     };
     handleChange = event => {
     console.log("event ", event.target.value);
@@ -18,29 +19,26 @@ class Login extends Component {
     };
     handleSignin = () => {
     const authedId = this.state.selectedUser;
-        console.log(
-          "this.props.location.state  login out ",
-          this.props.location.state.from.pathname
-        );
-        console.log(
-          "this.props.location.state  login out ",
-          this.props.location.state.from,
-          "type of ",
-          typeof this.props.location.state.from.pathname
-        );
+        
 
     if (authedId !== "" || authedId !== "unselected"){
         this.props.dispatch(handleInitialData(authedId));
-        console.log("this.props.location.state  login", this.props.location.state);
-        let from = { pathname: "/" };
-        if(this.props.location.state.from)
-            from = this.props.location.state.from;
 
-        console.log( ' this is from ', from)
-        return <Redirect to={from}  />
+        this.setState(()=>{
+            return { backToReferrer: true }
+        })
+        // console.log("this.props.location.state  login", this.props.location.state);
+        // const { from } = this.props.location.state || { pathname: "/" };
+        
+        // console.log( ' this is from ', from)
+        // return <Redirect to={from}  />
     }
     };
     render() {
+
+        const { from } = this.props.location.state || { pathname: "/" };
+        if(this.state.backToReferrer)
+            return <Redirect to={from} />;
     return (
         <Container className="sign-in-card">
         <Row className="justify-content-md-center">

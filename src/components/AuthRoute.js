@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom'
+import { Redirect, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 function AuthRoute({
@@ -24,7 +24,7 @@ function AuthRoute({
           return (
             <Redirect
               to={{
-                pathname: "/",
+                pathname: "/login",
                 state: { from: props.location }
               }}
             />
@@ -44,4 +44,4 @@ function mapStateToProps ({authedUser}) {
 
 }
 
-export default connect(mapStateToProps)(AuthRoute)
+export default withRouter(connect(mapStateToProps)(AuthRoute))
